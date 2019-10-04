@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import '../App/App.css';
 
 class MovieList extends Component {
 
@@ -14,7 +15,7 @@ class MovieList extends Component {
             <div className="movieList">
                 {/* <pre>{JSON.stringify(this.props.movies)}</pre> */}
                 {this.props.movies.map((movie) =>
-                    <div key={movie.id}>
+                    <div className="movieContainer" key={movie.id}>
                         <img src={movie.poster} alt={movie.title}/>
                         <h3>{movie.title}</h3>
                         <p>{movie.description}</p>
