@@ -2,13 +2,31 @@ const express = require('express');
 const pool = require('../modules/pool');
 
 const router = express.Router();
-
+// GET ROUTES
 // GET route to retrieve all movies in the database sorted by id
 router.get('/', (req, res) => {
     const query = `SELECT * FROM "movies"`;
     pool.query(query)
         .then((result) => {
             console.log(result.rows);
+            res.send(result.rows);
+        })
+        .catch((error) => {
+            console.log('Error in SELECT', error);
+        })
+})
+
+// GET route to retrieve the genres for the selected movie
+router.get('/details/:id', (req, res) => {
+    const query = `SELECT "name" FROM "genres"
+	JOIN "movies_genres" 
+		ON "genres".id = "movies_genres".genre_id
+	JOIN "movies"
+		ON "movies".id = "movies_genres".movie_id
+    WHERE "movies".id = $1;`;
+    const id = [req.params.id];
+    pool.query(query, id)
+        .then((result) => {
             res.send(result.rows);
         })
         .catch((error) => {
@@ -31,5 +49,7 @@ router.put('/:id', (req, res) => {
             console.log('Error in PUT', error);
         })
 })
+
+
 
 module.exports = router;
