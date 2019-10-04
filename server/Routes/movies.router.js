@@ -1,13 +1,14 @@
-const express = require('./node_modules/express');
+const express = require('express');
 const pool = require('../modules/pool');
 
 const router = express.Router();
 
 // GET route to retrieve all movies in the database sorted by id
 router.get('/', (req, res) => {
-    const query = `SELECT * FROM movies;`;
-    pool.query(queryText)
+    const query = `SELECT * FROM "movies"`;
+    pool.query(query)
         .then((result) => {
+            console.log(result.rows);
             res.send(result.rows);
         })
         .catch((error) => {
