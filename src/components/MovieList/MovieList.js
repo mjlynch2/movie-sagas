@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import '../App/App.css';
 
 class MovieList extends Component {
@@ -14,10 +15,10 @@ class MovieList extends Component {
         return (
             <div className="movieList">
                 {/* <pre>{JSON.stringify(this.props.movies)}</pre> */}
-                {this.props.movies.map((movie) =>
+                {this.props.movies.map((movie, index) =>
                     <div className="movieContainer" key={movie.id}>
                         <img src={movie.poster} alt={movie.title}/>
-                        <h3>{movie.title}</h3>
+                        <Link to={`/details/${index}`}><h3>{movie.title}</h3></Link>
                         <p>{movie.description}</p>
                     </div>
                 )}
