@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('./node_modules/express');
 const pool = require('../modules/pool');
 
 const router = express.Router();
@@ -30,3 +30,5 @@ router.put('/:id', (req, res) => {
             console.log('Error in PUT', error);
         })
 })
+
+module.exports = router;
