@@ -4,30 +4,29 @@ import '../App/App.css';
 
 class MovieList extends Component {
 
-    state = {
-        movieToDisplay: this.props.genres.title || "test"
-    }
-
     componentDidMount() {
         this.getMovieDetails();
     }
+
     getMovieDetails = () => {
         this.props.dispatch({ type: 'FETCH_DETAILS', payload: this.props.match.params.id })
     }
     render() {
         return (
             <div className="movieList">
-                <pre>{JSON.stringify(this.props.genres)}</pre>
-                <p>{this.state.movieToDisplay}</p>
-                <p>Genres:</p>
-                {/* {this.props.genres.map((item, index) => <span key={index}> {item.title} GENRES:{item.genreList.map((genre) =>  <p>{genre}</p>)}</span>)} */}
+                {this.props.genres.map((movie) => 
+                    <div>
+                        <h3>{movie.title}</h3>
+                        <img src={movie.poster} alt={movie.title}></img>{movie.description} 
+                    </div>)}
+                <span><strong> Genres: </strong>
+                    {this.props.genres.map(genre => <span>{genre.name}  </span>)}</span>
             </div>
         );
     }
 }
 
 const mapStateToProps = reduxState => ({
-    movies: reduxState.movies,
     genres: reduxState.genres
 })
 

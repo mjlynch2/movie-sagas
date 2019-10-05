@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
         })
 })
 
-// GET route to retrieve the genres for the selected movie
+// GET route to retrieve a single movie whose id is the given parameter, then get the names of all genres of that movie
 router.get('/details/:id', (req, res) => {
     const movieQuery = `SELECT * FROM "movies" where "id" = $1;`;
     const id = [req.params.id];
@@ -23,11 +23,11 @@ router.get('/details/:id', (req, res) => {
     pool.query(movieQuery, id)
         .then((movieResult) => {
             const genreQuery = `SELECT "name" FROM "genres"
-	                            JOIN "movies_genres" 
-                                    ON "genres".id = "movies_genres".genre_id
-                                JOIN "movies"
-                                    ON "movies".id = "movies_genres".movie_id
-                                WHERE "movies_genres".movie_id = $1;`;
+                                    JOIN "movies_genres" 
+                                        ON "genres".id = "movies_genres".genre_id
+                                    JOIN "movies"
+                                        ON "movies".id = "movies_genres".movie_id
+                                    WHERE "movies_genres".movie_id = $1;`;
             pool.query(genreQuery, id)
                 .then((genreResult) => {
                     console.log("MOVIE:", movieResult.rows, "GENRES:", genreResult.rows);
