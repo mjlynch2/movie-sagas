@@ -29,11 +29,10 @@ function* fetchMovies() {
 }
 
 // generator function that performs an axios get request for a single movie in the DB, then dispatches the result to the movies reducer.
-function* fetchDetails() {
+function* fetchDetails(action) {
     try {
-        console.log('in fetchDetails');
         const response = yield axios.get(`/movies/details/${action.payload}`);
-        yield put({type: 'SET_DETAILS', payload: response.data});
+        yield put({type: 'SET_GENRES', payload: response.data});
     } catch (error) {
         console.log('Error in saga getMovies', error);
     }
@@ -47,8 +46,6 @@ const movies = (state = [], action) => {
     switch (action.type) {
         case 'SET_MOVIES':
             return action.payload;
-        case 'SET_DETAILS':
-            return action.payload;
         default:
             return state;
     }
@@ -58,6 +55,8 @@ const movies = (state = [], action) => {
 const genres = (state = [], action) => {
     switch (action.type) {
         case 'SET_GENRES':
+            // const genreList = action.payload.map((genre) => genre.name)
+            // console.log(action);
             return action.payload;
         default:
             return state;

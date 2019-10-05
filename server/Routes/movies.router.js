@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
     const query = `SELECT * FROM "movies"`;
     pool.query(query)
         .then((result) => {
-            console.log(result.rows);
             res.send(result.rows);
         })
         .catch((error) => {
@@ -18,16 +17,23 @@ router.get('/', (req, res) => {
 
 // GET route to retrieve the genres for the selected movie
 router.get('/details/:id', (req, res) => {
-    const query = `SELECT "name" FROM "genres"
-	JOIN "movies_genres" 
-		ON "genres".id = "movies_genres".genre_id
-	JOIN "movies"
-		ON "movies".id = "movies_genres".movie_id
-    WHERE "movies".id = $1;`;
+    const movieQuery = `SELECT * FROM "movies" where "id" = $1;`;
     const id = [req.params.id];
-    pool.query(query, id)
-        .then((result) => {
-            res.send(result.rows);
+    console.log(id);
+    pool.query(movieQuery, id)
+        .then((movieResult) => {
+            const genreQuery = `SELECT "name" FROM "genres"
+	                            JOIN "movies_genres" 
+                                    ON "genres".id = "movies_genres".genre_id
+                                JOIN "movies"
+                                    ON "movies".id = "movies_genres".movie_id
+                                WHERE "movies_genres".movie_id = $1;`;
+            pool.query(genreQuery, id)
+                .then((genreResult) => {
+                    console.log("MOVIE:", movieResult.rows, "GENRES:", genreResult.rows);
+                    const resultToSend = movieResult.rows.concat(genreResult.rows);
+                    res.send(resultToSend);
+                })
         })
         .catch((error) => {
             console.log('Error in SELECT', error);
