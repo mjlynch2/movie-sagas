@@ -11,6 +11,9 @@ const styles = theme => ({
     description: {
         width: 600
     },
+    button: {
+        marginRight: 8
+    }
 });
 
 class EditForm extends Component {
@@ -37,13 +40,14 @@ class EditForm extends Component {
         this.props.dispatch({type: 'EDIT_MOVIE', payload: this.state.movieToEdit});
         this.props.getMovieDetails();
         alert(`${this.state.movieToEdit.title} has been successfully updated!`);
-        this.props.history.push(`/details/${this.props.movie.id}`);
+        this.props.history.goBack();
     }
 
     render() {
         const { classes } = this.props;
         return (
-            <div>
+            <div className="editFormContainer">
+                <h3>Editing {this.props.movie.title}</h3>
                 <TextField id="outlined-name"
                     label="Movie Title"
                     value={this.state.movieToEdit.title}
@@ -51,6 +55,7 @@ class EditForm extends Component {
                     margin="normal"
                     variant="outlined"
                 />
+                <br/>
                 <TextField id="outlined-name"
                     className={classes.description}
                     label="Movie Description"
@@ -61,8 +66,9 @@ class EditForm extends Component {
                     margin="normal"
                     variant="outlined"
                 />
-                <Button onClick={this.handleEdit}>Save</Button>
-                <Button onClick={() => {this.props.history.goBack()}}>Cancel</Button>
+                <br/>
+                <Button className={classes.button} variant="outlined" onClick={this.handleEdit}>Save</Button>
+                <Button className={classes.button} variant="outlined" onClick={() => {this.props.history.goBack()}}>Cancel</Button>
             </div>
         );
     }
