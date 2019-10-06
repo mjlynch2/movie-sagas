@@ -11,15 +11,14 @@ class MovieList extends Component {
     getMovies = () => {
         this.props.dispatch({ type: 'FETCH_MOVIES'})
     }
+
     render() {
         return (
             <div className="movieList">
-                {/* <pre>{JSON.stringify(this.props.movies)}</pre> */}
                 {this.props.movies.map((movie) =>
-                    <div className="movieContainer" key={movie.id}>
+                    <div className="movieContainer" onClick={() => {this.props.history.push(`/details/${movie.id}`)}} key={movie.id}>
                         <img className="moviePoster"src={movie.poster} alt={movie.title}/>
-                        <Link to={`/details/${movie.id}`}><h3>{movie.title}</h3></Link>
-                        {/* <p>{movie.description}</p> */}
+                        <h4>{movie.title}</h4>
                     </div>
                 )}
             </div>
