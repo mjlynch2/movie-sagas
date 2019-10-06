@@ -16,9 +16,9 @@ class EditForm extends Component {
 
     state = {
         movieToEdit: {
-            title: this.props.genres.title,
-            description: this.props.genres.description,
-            id: this.props.genres.id
+            title: this.props.movie.title,
+            description: this.props.movie.description,
+            id: this.props.movie.id
         }
     }
 
@@ -71,7 +71,7 @@ class EditForm extends Component {
 }
 
 const mapStateToProps = reduxState => ({
-    genres: reduxState.genres[0]
+    reduxState
 })
 
 EditForm.propTypes = {

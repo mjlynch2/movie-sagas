@@ -32,7 +32,13 @@ function* fetchMovies() {
 function* fetchDetails(action) {
     try {
         const response = yield axios.get(`/movies/details/${action.payload}`);
-        yield put({type: 'SET_GENRES', payload: response.data});
+        const movie = response.data[0][0]; 
+        const genres = response.data[1]
+        console.log(genres[1]);
+        yield put({ type: 'SET_GENRES', keyName: 'id', value: movie.id });
+        yield put({ type: 'SET_GENRES', keyName: 'title', value: movie.title });
+        yield put({ type: 'SET_GENRES', keyName: 'description', value: movie.description });
+        yield put({ type: 'SET_GENRES', keyName: 'genres', value: genres });
     } catch (error) {
         console.log('Error in saga getMovies', error);
     }
@@ -60,11 +66,17 @@ const movies = (state = [], action) => {
 }
 
 // Used to store the movie genres
-const genres = (state = [], action) => {
+let movieDetails = {
+    title: '',
+    id: '',
+    description: '',
+    genres: null,
+}
+const genres = (state = movieDetails, action) => {
     switch (action.type) {
         case 'SET_GENRES':
-            return action.payload;
-        default:
+            return  {...state, [action.keyName]: action.value}
+        default: 
             return state;
     }
 }

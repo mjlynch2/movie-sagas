@@ -31,7 +31,9 @@ router.get('/details/:id', (req, res) => {
             pool.query(genreQuery, id)
                 .then((genreResult) => {
                     console.log("MOVIE:", movieResult.rows, "GENRES:", genreResult.rows);
-                    const resultToSend = movieResult.rows.concat(genreResult.rows);
+                    const resultToSend = [movieResult.rows, genreResult.rows];
+                    console.log(resultToSend);
+                    
                     res.send(resultToSend);
                 })
         })

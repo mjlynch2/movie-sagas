@@ -16,15 +16,15 @@ class EditMovie extends Component {
     render() {
         return (
             <>
-                {JSON.stringify(this.props.genres)}
-                <EditForm getMovieDetails={this.getMovieDetails} movie={this.props.genres}/>
+                {JSON.stringify(this.props.reduxState.genres)}
+                <EditForm getMovieDetails={this.getMovieDetails} movie={this.props.reduxState.genres[0]}/>
             </>
         );
     }
 }
 
 const mapStateToProps = reduxState => ({
-    genres: reduxState.genres[0]
+    reduxState
 })
 
 
