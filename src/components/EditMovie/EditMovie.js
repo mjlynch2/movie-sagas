@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import '../App/App.css';
+import EditForm from '../MaterialUI/EditForm';
 
-class MovieList extends Component {
+class EditMovie extends Component {
 
     componentDidMount() {
         this.getMovieDetails();
@@ -11,23 +12,20 @@ class MovieList extends Component {
     getMovieDetails = () => {
         this.props.dispatch({ type: 'FETCH_DETAILS', payload: this.props.match.params.id })
     }
+
     render() {
         return (
-            <div className="movieList">
-                {this.props.genres.map((movie) =>
-                    <div>
-                        <h3>{movie.title}</h3>
-                        <img src={movie.poster} alt={movie.title}></img>{movie.description}
-                    </div>)}
-                <span><strong> Genres: </strong>
-                    {this.props.genres.map(genre => <span>{genre.name}  </span>)}</span>
-            </div>
+            <>
+                {JSON.stringify(this.props.genres)}
+                <EditForm getMovieDetails={this.getMovieDetails} movie={this.props.genres}/>
+            </>
         );
     }
 }
 
 const mapStateToProps = reduxState => ({
-    genres: reduxState.genres
+    genres: reduxState.genres[0]
 })
 
-export default connect(mapStateToProps)(MovieList);
+
+export default connect(mapStateToProps)(EditMovie);

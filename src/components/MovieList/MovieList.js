@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import '../App/App.css';
+import MovieItem from '../MovieItem/MovieItem';
 
 class MovieList extends Component {
 
@@ -15,12 +15,7 @@ class MovieList extends Component {
     render() {
         return (
             <div className="movieList">
-                {this.props.movies.map((movie) =>
-                    <div className="movieContainer" onClick={() => {this.props.history.push(`/details/${movie.id}`)}} key={movie.id}>
-                        <img className="moviePoster"src={movie.poster} alt={movie.title}/>
-                        <h4>{movie.title}</h4>
-                    </div>
-                )}
+                <MovieItem movies={this.props.movies} />
             </div>
         );
     }

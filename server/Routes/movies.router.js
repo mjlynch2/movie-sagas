@@ -5,7 +5,7 @@ const router = express.Router();
 // GET ROUTES
 // GET route to retrieve all movies in the database sorted by id
 router.get('/', (req, res) => {
-    const query = `SELECT * FROM "movies"`;
+    const query = `SELECT * FROM "movies" ORDER BY "id"`;
     pool.query(query)
         .then((result) => {
             res.send(result.rows);
@@ -43,9 +43,9 @@ router.get('/details/:id', (req, res) => {
 // POST route to add a movie to the database
 
 // PUT route to update a movie's title, description
-router.put('/:id', (req, res) => {
+router.put('/', (req, res) => {
     const updatedMovie = req.body;
-    const queryValues = [updatedMovie.title, updatedMovie.description, req.params.id];
+    const queryValues = [updatedMovie.title, updatedMovie.description, updatedMovie.id];
     const query = `UPDATE movies SET "title" = $1, "description" = $2 WHERE id = $3;`;
     pool.query(query, queryValues)
         .then(() => {

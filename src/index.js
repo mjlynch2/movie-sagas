@@ -15,6 +15,7 @@ import axios from 'axios';
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchMovies);
     yield takeEvery('FETCH_DETAILS', fetchDetails);
+    yield takeEvery('EDIT_MOVIE', editMovie);
 }
 
 // generator function that performs an axios get request for all movies in the db, then dispatches the result to the movies reducer.
@@ -34,6 +35,14 @@ function* fetchDetails(action) {
         yield put({type: 'SET_GENRES', payload: response.data});
     } catch (error) {
         console.log('Error in saga getMovies', error);
+    }
+}
+
+function* editMovie(action) {
+    try {
+        yield axios.put(`/movies`, action.payload);
+    } catch (error) {
+        console.log('Error in saga editMovie', error);
     }
 }
 
