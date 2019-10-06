@@ -17,9 +17,9 @@ class MovieList extends Component {
                 {/* <pre>{JSON.stringify(this.props.movies)}</pre> */}
                 {this.props.movies.map((movie) =>
                     <div className="movieContainer" key={movie.id}>
-                        <img src={movie.poster} alt={movie.title}/>
+                        <img className="moviePoster"src={movie.poster} alt={movie.title}/>
                         <Link to={`/details/${movie.id}`}><h3>{movie.title}</h3></Link>
-                        <p>{movie.description}</p>
+                        {/* <p>{movie.description}</p> */}
                     </div>
                 )}
             </div>

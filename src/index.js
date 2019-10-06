@@ -20,7 +20,6 @@ function* rootSaga() {
 // generator function that performs an axios get request for all movies in the db, then dispatches the result to the movies reducer.
 function* fetchMovies() {
     try {
-        console.log('in fetchMovies');
         const response = yield axios.get('/movies');
         yield put({type: 'SET_MOVIES', payload: response.data});
     } catch(error) {
@@ -55,8 +54,6 @@ const movies = (state = [], action) => {
 const genres = (state = [], action) => {
     switch (action.type) {
         case 'SET_GENRES':
-            // const genreList = action.payload.map((genre) => genre.name)
-            // console.log(action);
             return action.payload;
         default:
             return state;
