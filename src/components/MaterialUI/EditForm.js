@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import '../App/App.css';
 import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -22,10 +23,6 @@ class EditForm extends Component {
         }
     }
 
-    componentDidMount() {
-        this.props.getMovieDetails();
-    }
-
     handleChange = (event, keyName) => {
         this.setState({
             movieToEdit: {
@@ -37,9 +34,10 @@ class EditForm extends Component {
 
     handleEdit = () => {
         console.log(this.state.movieToEdit);
-        this.props.dispatch({type: 'EDIT_MOVIE', payload: this.state.movieToEdit})
-        alert(`${this.state.movieToEdit.title} has been successfully updated!`);
+        this.props.dispatch({type: 'EDIT_MOVIE', payload: this.state.movieToEdit});
         this.props.getMovieDetails();
+        alert(`${this.state.movieToEdit.title} has been successfully updated!`);
+        this.props.history.push(`/details/${this.props.movie.id}`);
     }
 
     render() {
@@ -70,12 +68,12 @@ class EditForm extends Component {
     }
 }
 
-const mapStateToProps = reduxState => ({
-    reduxState
-})
-
 EditForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(connect(mapStateToProps)(EditForm));
+const mapStateToProps = reduxState => ({
+    movie: reduxState.movieDetails
+})
+
+export default withRouter(withStyles(styles)(connect(mapStateToProps)(EditForm)));

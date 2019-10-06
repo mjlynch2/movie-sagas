@@ -16,8 +16,8 @@ class EditMovie extends Component {
     render() {
         return (
             <>
-                {JSON.stringify(this.props.reduxState.genres)}
-                <EditForm getMovieDetails={this.getMovieDetails} movie={this.props.reduxState.genres[0]}/>
+                {JSON.stringify(this.props.reduxState.movieDetails)}
+                <EditForm getMovieDetails={this.getMovieDetails} movieTest={this.props.reduxState.movieDetails}/>
             </>
         );
     }

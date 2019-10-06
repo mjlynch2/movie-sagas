@@ -8,6 +8,7 @@ class MovieList extends Component {
     componentDidMount(){
         this.getMovies();
     }
+
     getMovies = () => {
         this.props.dispatch({ type: 'FETCH_MOVIES'})
     }

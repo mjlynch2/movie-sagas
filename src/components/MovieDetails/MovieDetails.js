@@ -16,24 +16,19 @@ class MovieList extends Component {
         this.props.history.push('/');
     }
     render() {
-        // let movieToDisplay = this.props.genres.filter((movie) => {
-        //     return movie.id !== undefined
-        // });
-        // console.log(movieToDisplay)
         return (
             <>
                 <div className="movieList">
-                    {/* {this.props.genres.movie.map((movie, index) => 
-                        <div key={index}>
-                            <h3>{movie.title}</h3>
-                            <img src={movie.poster} alt={movie.title}></img>{movie.description} 
-                        </div>)} */}
-                    {/* <span><strong> Genres: </strong>
-                        {this.props.genres.map(genre => <span>{genre.name}  </span>)}</span>
-                <button onClick={() => {this.props.history.push(`/details/edit/${movieToDisplay[0].id}`)}}>Edit</button>
-                <button onClick={this.goHome}>Back to List</button> */}
-                {JSON.stringify(this.props.genres.movie)}
-                {/* <p>{this.props.genres.movie.title}</p> */}
+                    <h3>{this.props.movie.title}</h3>
+                    <img src={this.props.movie.poster} alt={this.props.movie.title}/>
+                    <p>{this.props.movie.description}</p>
+                    <span>
+                        <strong> Genres: </strong>
+                        {this.props.genres.map((genre, index) => <span key={index}>{genre.name}</span>)}
+                    </span>
+                    <br/>
+                    <button onClick={() => {this.props.history.push(`/details/edit/${this.props.movie.id}`)}}>Edit</button>
+                    <button onClick={this.goHome}>Back to List</button>
                 </div>
             </>
         );
@@ -41,7 +36,8 @@ class MovieList extends Component {
 }
 
 const mapStateToProps = reduxState => ({
-    genres: reduxState.genres
+    genres: reduxState.genres,
+    movie: reduxState.movieDetails
 })
 
 export default connect(mapStateToProps)(MovieList);

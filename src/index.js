@@ -34,11 +34,8 @@ function* fetchDetails(action) {
         const response = yield axios.get(`/movies/details/${action.payload}`);
         const movie = response.data[0][0]; 
         const genres = response.data[1]
-        console.log(genres[1]);
-        yield put({ type: 'SET_GENRES', keyName: 'id', value: movie.id });
-        yield put({ type: 'SET_GENRES', keyName: 'title', value: movie.title });
-        yield put({ type: 'SET_GENRES', keyName: 'description', value: movie.description });
-        yield put({ type: 'SET_GENRES', keyName: 'genres', value: genres });
+        yield put({ type: 'SET_MOVIE_DETAILS', payload: movie });
+        yield put({ type: 'SET_GENRES', payload: genres });
     } catch (error) {
         console.log('Error in saga getMovies', error);
     }
@@ -65,17 +62,20 @@ const movies = (state = [], action) => {
     }
 }
 
-// Used to store the movie genres
-let movieDetails = {
-    title: '',
-    id: '',
-    description: '',
-    genres: null,
+const movieDetails = (state =[], action) => {
+    switch (action.type) {
+        case 'SET_MOVIE_DETAILS':
+            return action.payload;
+        default:
+            return state;
+    }
 }
-const genres = (state = movieDetails, action) => {
+
+// Used to store the movie genres
+const genres = (state = [], action) => {
     switch (action.type) {
         case 'SET_GENRES':
-            return  {...state, [action.keyName]: action.value}
+            return  action.payload
         default: 
             return state;
     }
@@ -86,6 +86,7 @@ const storeInstance = createStore(
     combineReducers({
         movies,
         genres,
+        movieDetails
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),
