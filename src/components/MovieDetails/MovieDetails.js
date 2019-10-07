@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import '../App/App.css';
-import {createMuiTheme} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-
-const buttonTheme = createMuiTheme({
-    spacing: 10
-})
 
 class MovieList extends Component {
 

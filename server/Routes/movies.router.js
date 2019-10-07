@@ -5,7 +5,14 @@ const router = express.Router();
 // GET ROUTES
 // GET route to retrieve all movies in the database sorted by id
 router.get('/', (req, res) => {
-    const query = `SELECT * FROM "movies" ORDER BY "id"`;
+    // const query = `SELECT * FROM "movies" ORDER BY "id"`;
+    const query = `SELECT ("movies".title), ("movies".poster), ("movies".id), ("movies".description), array_agg("genres".name) AS "genres" FROM "movies"
+	JOIN "movies_genres" 
+		ON "movies".id = "movies_genres".movie_id
+	JOIN "genres"
+		ON "genres".id = "movies_genres".genre_id
+    GROUP BY "movies".id, "movies".title, "movies".description, "movies".poster
+    ORDER BY "id"`;
     pool.query(query)
         .then((result) => {
             res.send(result.rows);
