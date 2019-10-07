@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+// Component to render the text fields of the Edit Movie view. The name and description of the chosen movie will automatically populate within the corresponding text field. On save, the changes are sent to the DB. On cancel, go back to the previous page.
 const styles = theme => ({
     description: {
         width: 600

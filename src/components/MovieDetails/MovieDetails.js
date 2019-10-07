@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import '../App/App.css';
 import Button from '@material-ui/core/Button';
 
+// Detailed view of a single chosen movie. Shows the title, poster, description, and associated genre(s). Provides routing to edit the title and/or description, or to go back to the list view.
 class MovieList extends Component {
 
     componentDidMount() {

@@ -28,7 +28,7 @@ function* fetchMovies() {
     }
 }
 
-// generator function that performs an axios get request for a single movie in the DB, then dispatches the result to the movies reducer.
+// generator function that performs an axios get request for a single movie in the DB, then dispatches the result to the movies reducer. The response from the server contains two arrays, one with movie details and one with genres. 
 function* fetchDetails(action) {
     try {
         const response = yield axios.get(`/movies/details/${action.payload}`);
@@ -62,6 +62,7 @@ const movies = (state = [], action) => {
     }
 }
 
+// Used to store a single movie returned from the server, for use in the details view and the edit view
 const movieDetails = (state =[], action) => {
     switch (action.type) {
         case 'SET_MOVIE_DETAILS':

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import '../App/App.css';
 
+// Component to render each movie item onto the main page. Will render an image, title, and genre(s).
 class MovieItem extends Component {
 
     render() {
