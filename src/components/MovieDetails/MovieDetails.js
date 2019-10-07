@@ -1,35 +1,56 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import '../App/App.css';
+import {createMuiTheme} from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+
+const buttonTheme = createMuiTheme({
+    spacing: 10
+})
 
 class MovieList extends Component {
 
     componentDidMount() {
         this.getMovieDetails();
-
     }
 
     getMovieDetails = () => {
         this.props.dispatch({ type: 'FETCH_DETAILS', payload: this.props.match.params.id })
     }
 
-    goHome = () => {
-        this.props.history.push('/');
-    }
     render() {
+        let genres = this.props.genres.map(({ name }) => name );
+        genres = genres.join(', ');
         return (
             <>
-                <div className="movieList">
+                <div className="movieDetailsContainer">
                     <h3>{this.props.movie.title}</h3>
-                    <img src={this.props.movie.poster} alt={this.props.movie.title}/>
-                    <p>{this.props.movie.description}</p>
-                    <span>
+                    <div className="descriptionContainer">
+                        <img className="moviePosterDetails" src={this.props.movie.poster} alt={this.props.movie.title} />
+                        {this.props.movie.description}
+                    </div>
+                    <div>
                         <strong> Genres: </strong>
-                        {this.props.genres.map((genre, index) => <span key={index}>{genre.name}</span>)}
-                    </span>
-                    <br/>
-                    <button onClick={() => {this.props.history.push(`/details/edit/${this.props.movie.id}`)}}>Edit</button>
-                    <button onClick={this.goHome}>Back to List</button>
+                        {genres}
+                    </div>
+                    <div className="btn">
+                        <Button 
+                            onClick={() => {this.props.history.push(`/details/edit/${this.props.movie.id}`)}}
+                            variant="outlined"
+                            color="primary"
+                        >
+                            Edit
+                        </Button>
+                    <div/>
+                    <div className="btn"/>
+                        <Button 
+                            onClick={() => {this.props.history.goBack()}}
+                            variant="outlined"
+                            color="primary"
+                        >
+                            Back to List
+                        </Button>
+                    </div>
                 </div>
             </>
         );
