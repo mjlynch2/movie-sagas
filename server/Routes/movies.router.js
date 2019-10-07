@@ -5,7 +5,6 @@ const router = express.Router();
 // GET ROUTES
 // GET route to retrieve all movies in the database sorted by id
 router.get('/', (req, res) => {
-    // const query = `SELECT * FROM "movies" ORDER BY "id"`;
     const query = `SELECT ("movies".title), ("movies".poster), ("movies".id), ("movies".description), array_agg("genres".name) AS "genres" FROM "movies"
 	JOIN "movies_genres" 
 		ON "movies".id = "movies_genres".movie_id
@@ -49,7 +48,7 @@ router.get('/details/:id', (req, res) => {
         })
 })
 
-// POST route to add a movie to the database
+// POST route to add a movie to the database TODO
 
 // PUT route to update a movie's title, description
 router.put('/', (req, res) => {
